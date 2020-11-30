@@ -1,0 +1,23 @@
+{
+  "name": "proshop",
+  "version": "1.0.0",
+  "description": "Shopping app shop",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon back-end/server",
+    "data:import": "node back-end/seeder",
+    "data:destroy": "node back-end/seeder -d"
+  },
+  "author": "jerome.ph",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "mongoose": "^5.10.16",
+    "nodemon": "^2.0.6"
+  }
+}
