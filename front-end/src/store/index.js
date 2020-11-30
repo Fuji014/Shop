@@ -5,8 +5,19 @@ import rootReducer from "../reducers";
 
 const middleware = [thunk];
 
+const cartItemsFromStorage = localStorage.getItem("cartItems")
+  ? localStorage.getItem("cartItems")
+  : [];
+
+const initialState = {
+  cart: {
+    cartItems: cartItemsFromStorage,
+  },
+};
+
 const store = createStore(
   rootReducer,
+  initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
 
