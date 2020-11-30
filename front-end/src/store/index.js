@@ -6,7 +6,7 @@ import rootReducer from "../reducers";
 const middleware = [thunk];
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")
-  ? localStorage.getItem("cartItems")
+  ? JSON.parse(localStorage.getItem("cartItems"))
   : [];
 
 const initialState = {
