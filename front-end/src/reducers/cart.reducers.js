@@ -37,6 +37,23 @@ const cartReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload.error,
       };
+
+    case cartConstants.REMOVE_CART_ITEM_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case cartConstants.REMOVE_CART_ITEM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        cartItems: state.cartItems.filter((x) => x.product !== action.payload),
+      };
+    case cartConstants.REMOVE_CART_ITEM_FAILURE:
+      return {
+        ...initialState,
+        loading: false,
+      };
     default:
       return state;
   }

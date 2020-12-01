@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // actions
-import { addToCart } from "../../actions/";
+import { addToCart, removeFromCart } from "../../actions/";
 
 // router
 import { Link } from "react-router-dom";
@@ -42,7 +42,7 @@ function Cart({ match, location, history }) {
   }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
-    console.log("remove");
+    dispatch(removeFromCart(id));
   };
 
   const checkoutHandler = () => {
