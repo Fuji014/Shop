@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // router
 import { Switch, Route } from "react-router-dom";
