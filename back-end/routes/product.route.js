@@ -9,7 +9,9 @@ const {
   getProduct,
 } = require("../controllers/product.controller.");
 
+// routes
 router.get("/products", getProducts);
 router.get("/products/:id", getProduct);
 
+// export
 module.exports = router;
