@@ -9,16 +9,19 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 // config
 const app = express();
 app.use(cors());
+app.use(express.json());
 env.config();
 
 // connect db
 connectDb();
 
 // routes
-const productRoutes = require("./routes/product");
+const productRoutes = require("./routes/product.route");
+const authRoutes = require("./routes/user.route");
 
 // middleware
 app.use(cors());
+app.use("/api", authRoutes);
 app.use("/api", productRoutes);
 
 // custom error handler middleware
