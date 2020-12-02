@@ -68,3 +68,55 @@ export const register = (name, email, password) => async (dispatch) => {
     });
   }
 };
+
+export const getUserDetails = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: userConstants.USER_DETAILS_REQUEST,
+    });
+
+    const res = await initialAxios.get(`/users/profile`);
+
+    dispatch({
+      type: userConstants.USER_DETAILS_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: userConstants.USER_DETAILS_FAILURE,
+      payload: {
+        error:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      },
+    });
+  }
+};
+
+export const updateUserProfile = (user) => async (dispatch) => {
+  try {
+    dispatch({
+      type: userConstants.USER_UPDATE_REQUEST,
+    });
+
+    const res = await initialAxios.put("/users/profile", user);
+
+    dispatch({
+      type: userConstants.USER_UPDATE_SUCCESS,
+      payload: res.data,
+    });
+
+    localStorage.setItem("userInfo", JSON.stringify(res.data));
+  } catch (error) {
+    dispatch({
+      type: userConstants.USER_UPDATE_FAILURE,
+      payload: {
+        error:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      },
+    });
+  }
+};

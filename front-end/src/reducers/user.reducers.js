@@ -3,6 +3,7 @@ const initialState = {
   userInfo: null,
   loading: false,
   error: null,
+  success: false,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -59,6 +60,47 @@ const userReducer = (state = initialState, action) => {
         error: null,
       };
     case userConstants.USER_REGISTER_FAILURE:
+      return {
+        ...initialState,
+        loading: false,
+        error: action.payload.error,
+      };
+    // USER DETAILS REDUCER
+    case userConstants.USER_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case userConstants.USER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        userInfo: action.payload,
+        loading: false,
+        error: null,
+      };
+    case userConstants.USER_DETAILS_FAILURE:
+      return {
+        ...initialState,
+        loading: false,
+        error: action.payload.error,
+      };
+
+    // UPDATE USER DETAILS
+    case userConstants.USER_UPDATE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        success: false,
+      };
+    case userConstants.USER_UPDATE_SUCCESS:
+      return {
+        ...state,
+        userInfo: action.payload,
+        loading: false,
+        success: true,
+        error: null,
+      };
+    case userConstants.USER_UPDATE_FAILURE:
       return {
         ...initialState,
         loading: false,
