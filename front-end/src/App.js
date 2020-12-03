@@ -11,6 +11,7 @@ import Login from "./containers/Login";
 import Register from "./containers/Register";
 import Profile from "./containers/Profile";
 import Shipping from "./containers/Shipping";
+import Payment from "./containers/Payment";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
         <Route path="/shipping" component={Shipping} />
+        <Route path="/payment" component={Payment} />
       </Switch>
     </>
   );

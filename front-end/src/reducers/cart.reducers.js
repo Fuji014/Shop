@@ -3,6 +3,7 @@ import { cartConstants } from "../actions/constants";
 const initialState = {
   cartItems: [],
   shippingAddress: {},
+  paymentMethod: null,
   loading: false,
   error: null,
 };
@@ -61,6 +62,13 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         shippingAddress: action.payload,
+      };
+
+    // PAYMENT METHOD
+    case cartConstants.CART_SAVE_PAYMENT_METHOD_SUCCESS:
+      return {
+        ...state,
+        paymentMethod: action.payload,
       };
     default:
       return state;
