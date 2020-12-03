@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 // components
 import FormContainer from "../../components/UI/FormContainer";
+import CheckoutSteps from "../../components/CheckoutSteps";
 
 // action
 import { saveShipppingAddress } from "../../actions/cart.actions";
@@ -42,6 +43,7 @@ function Shipping(props) {
   return (
     <Layout>
       <FormContainer>
+        <CheckoutSteps step1 step2 />
         <h1>Shipping</h1>
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="address">
