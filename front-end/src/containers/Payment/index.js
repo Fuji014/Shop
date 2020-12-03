@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // bootstrap
-import { Form, Button, Col, FormGroup } from "react-bootstrap";
+import { Form, Button, Col } from "react-bootstrap";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";

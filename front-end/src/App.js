@@ -12,6 +12,7 @@ import Register from "./containers/Register";
 import Profile from "./containers/Profile";
 import Shipping from "./containers/Shipping";
 import Payment from "./containers/Payment";
+import PlaceOrder from "./containers/PlaceOrder";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/profile" component={Profile} />
         <Route path="/shipping" component={Shipping} />
         <Route path="/payment" component={Payment} />
+        <Route path="/placeorder" component={PlaceOrder} />
       </Switch>
     </>
   );
