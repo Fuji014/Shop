@@ -10,6 +10,7 @@ import Cart from "./containers/Cart";
 import Login from "./containers/Login";
 import Register from "./containers/Register";
 import Profile from "./containers/Profile";
+import Shipping from "./containers/Shipping";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
+        <Route path="/shipping" component={Shipping} />
       </Switch>
     </>
   );

@@ -2,6 +2,7 @@ import { cartConstants } from "../actions/constants";
 
 const initialState = {
   cartItems: [],
+  shippingAddress: {},
   loading: false,
   error: null,
 };
@@ -53,6 +54,13 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...initialState,
         loading: false,
+      };
+
+    // SHIPPING ADDRESS ADD
+    case cartConstants.CART_SAVE_SHIPPING_ADDRESS_SUCCESS:
+      return {
+        ...state,
+        shippingAddress: action.payload,
       };
     default:
       return state;
