@@ -18,11 +18,13 @@ connectDb();
 // routes
 const productRoutes = require("./routes/product.route");
 const authRoutes = require("./routes/user.route");
+const orderRoutes = require("./routes/order.route");
 
 // middleware
 app.use(cors());
 app.use("/api", authRoutes);
 app.use("/api", productRoutes);
+app.use("/api", orderRoutes);
 
 // custom error handler middleware
 app.use(notFound);
