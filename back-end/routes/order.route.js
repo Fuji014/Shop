@@ -4,11 +4,15 @@ const express = require("express");
 const router = express.Router();
 
 // controllers
-const { addOrderItems } = require("../controllers/order.conteroller");
+const {
+  addOrderItems,
+  getOrderById,
+} = require("../controllers/order.conteroller");
 
 // middleware
 const { protect } = require("../middleware/auth.middleware");
 
 router.route("/orders").post(protect, addOrderItems);
+router.route("/orders/:id").get(protect, getOrderById);
 
-router.module.exports = router;
+module.exports = router;

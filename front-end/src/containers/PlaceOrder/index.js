@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // bootstrap
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
@@ -14,9 +14,14 @@ import Layout from "../../components/Layout";
 import Message from "../../components/Message";
 import CheckoutSteps from "../../components/CheckoutSteps";
 
+// action
+import { createOrder } from "../../actions/order.actions";
+
 function PlaceOrder(props) {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const order = useSelector((state) => state.order);
+  const { orderDetails, success, error } = order;
 
   // calculate prices
   const addDecimals = (num) => {
@@ -36,7 +41,25 @@ function PlaceOrder(props) {
     Number(cart.shippingPrice) +
     Number(cart.taxPrice)
   ).toFixed(2);
-  const placeOrderHandler = () => {};
+
+  useEffect(() => {
+    if (success) {
+      props.history.push(`/order/${orderDetails._id}`);
+    }
+  }, [props.history, success, orderDetails]);
+  const placeOrderHandler = () => {
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
+  };
 
   return (
     <Layout>
@@ -125,11 +148,14 @@ function PlaceOrder(props) {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
+                {error && <Message variant="danger">{error}</Message>}
+              </ListGroup.Item>
+              <ListGroup.Item>
                 <Button
                   type="button"
                   className="btn-block"
                   disabled={cart.cartItems === 0}
-                  onCLick={placeOrderHandler}
+                  onClick={placeOrderHandler}
                 >
                   PLACE ORDER
                 </Button>
