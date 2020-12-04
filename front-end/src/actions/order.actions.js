@@ -50,3 +50,28 @@ export const getOrderDetails = (id) => async (dispatch) => {
     });
   }
 };
+
+export const payOrder = (orderId, paymentResult) => async (dispatch) => {
+  try {
+    dispatch({
+      type: orderConstants.ORDER_PAY_REQUEST,
+    });
+
+    const res = await initialAxios.PUT(`/orders/${orderId}/pay`, paymentResult);
+
+    dispatch({
+      type: orderConstants.ORDER_PAY_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: orderConstants.ORDER_PAY_FAILURE,
+      payload: {
+        error:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      },
+    });
+  }
+};

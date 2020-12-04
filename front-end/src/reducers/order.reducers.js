@@ -51,6 +51,32 @@ const orderReducer = (state = initialState, action) => {
         error: action.payload.error,
       };
 
+    // order pay
+    case orderConstants.ORDER_PAY_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case orderConstants.ORDER_PAY_SUCCESS:
+      return {
+        ...state,
+        success: true,
+      };
+    case orderConstants.ORDER_PAY_FAILURE:
+      return {
+        ...initialState,
+        loading: false,
+        error: action.payload.error,
+      };
+    case orderConstants.ORDER_PAY_RESET:
+      return {
+        ...state,
+        orderDetails: {},
+        loading: false,
+        success: false,
+        error: null,
+      };
+    // default
     default:
       return state;
   }
