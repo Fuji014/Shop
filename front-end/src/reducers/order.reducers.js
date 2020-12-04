@@ -9,6 +9,7 @@ const initialState = {
 
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
+    // order create
     case orderConstants.ORDER_CREATE_REQUEST:
       return {
         ...state,
@@ -27,6 +28,26 @@ const orderReducer = (state = initialState, action) => {
         ...initialState,
         loading: false,
         success: false,
+        error: action.payload.error,
+      };
+
+    // order details
+    case orderConstants.ORDER_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case orderConstants.ORDER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        orderDetails: action.payload,
+        loading: false,
+      };
+
+    case orderConstants.ORDER_DETAILS_FAILURE:
+      return {
+        ...initialState,
+        loading: false,
         error: action.payload.error,
       };
 
