@@ -1,10 +1,15 @@
 import { orderConstants } from "../actions/constants";
 
 const initialState = {
-  orderDetails: {},
+  orderDetails: [],
   loading: false,
   success: false,
   error: null,
+  orderPay: {
+    loadingPay: false,
+    successPay: false,
+    error: null,
+  },
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -55,27 +60,36 @@ const orderReducer = (state = initialState, action) => {
     case orderConstants.ORDER_PAY_REQUEST:
       return {
         ...state,
-        loading: true,
+        orderPay: {
+          loadingPay: true,
+        },
       };
     case orderConstants.ORDER_PAY_SUCCESS:
       return {
         ...state,
-        success: true,
+        orderPay: {
+          loadingPay: false,
+          successPay: true,
+        },
       };
     case orderConstants.ORDER_PAY_FAILURE:
       return {
         ...initialState,
-        loading: false,
-        error: action.payload.error,
+        orderPay: {
+          loadingPay: false,
+          error: action.payload.error,
+        },
       };
     case orderConstants.ORDER_PAY_RESET:
       return {
         ...state,
-        orderDetails: {},
-        loading: false,
-        success: false,
-        error: null,
+        orderPay: {
+          loadingPay: false,
+          successPay: false,
+          error: null,
+        },
       };
+
     // default
     default:
       return state;

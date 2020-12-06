@@ -84,7 +84,14 @@ const userReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload.error,
       };
-
+    case userConstants.USER_DETAILS_RESET:
+      return {
+        ...state,
+        userInfo: null,
+        loading: false,
+        error: null,
+        success: false,
+      };
     // UPDATE USER DETAILS
     case userConstants.USER_UPDATE_REQUEST:
       return {
@@ -106,6 +113,7 @@ const userReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload.error,
       };
+
     default:
       return state;
   }

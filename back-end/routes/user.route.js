@@ -9,18 +9,20 @@ const {
   registerUser,
   getUserProfile,
   updateUserProfile,
+  getUsers,
+  deleteUser,
 } = require("../controllers/user.controller");
 
 // middleware
-const { protect } = require("../middleware/auth.middleware");
+const { protect, admin } = require("../middleware/auth.middleware");
 
-// routes
 router.post("/users/login", authUser);
-router.post("/users", registerUser);
+router.route("/users").post(registerUser).get(protect, admin, getUsers);
 router
   .route("/users/profile")
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
+router.route("/users/:id").delete(protect, admin, deleteUser);
 
 // export
 module.exports = router;

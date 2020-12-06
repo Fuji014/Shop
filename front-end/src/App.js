@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 // router
 import { Switch, Route } from "react-router-dom";
 
 // components
+import PrivateRoute from "./components/HOC/PrivateRoutes";
 import Home from "./containers/Home";
 import Product from "./containers/Product";
 import Cart from "./containers/Cart";
@@ -14,6 +15,7 @@ import Shipping from "./containers/Shipping";
 import Payment from "./containers/Payment";
 import PlaceOrder from "./containers/PlaceOrder";
 import Order from "./containers/Order";
+import UserList from "./containers/UserList";
 
 function App() {
   return (
@@ -29,6 +31,9 @@ function App() {
         <Route path="/payment" component={Payment} />
         <Route path="/placeorder" component={PlaceOrder} />
         <Route path="/order/:id" component={Order} />
+
+        {/* admin route */}
+        <PrivateRoute path="/admin/userlist" component={UserList} />
       </Switch>
     </>
   );

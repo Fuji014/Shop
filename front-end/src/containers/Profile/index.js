@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // bootstrap
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Table } from "react-bootstrap";
 
 // router
 import { useHistory } from "react-router-dom";
@@ -16,11 +16,15 @@ import Loader from "../../components/Loader";
 
 // action
 import { getUserDetails, updateUserProfile } from "../../actions/user.actions";
+import { listOrder } from "../../actions/order.actions";
+import { LinkContainer } from "react-router-bootstrap";
 
 function Profile(props) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const history = useHistory();
+  const orderList = useSelector((state) => state.orderList);
+
+  const { orders, loading: loadingOrders, error: errorOrders } = orderList;
 
   const { userInfo, loading, error, success } = user;
 
@@ -32,7 +36,7 @@ function Profile(props) {
 
   useEffect(() => {
     if (!userInfo) {
-      history.push("/login");
+      props.history.push("/login");
     } else {
       if (!userInfo.name) {
         dispatch(getUserDetails());
@@ -41,7 +45,11 @@ function Profile(props) {
         setEmail(userInfo.email);
       }
     }
-  }, [dispatch, userInfo, history]);
+  }, [dispatch, userInfo, props.history]);
+
+  useEffect(() => {
+    dispatch(listOrder());
+  }, [dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -49,6 +57,8 @@ function Profile(props) {
       setMessage("Password do not match");
     } else {
       dispatch(updateUserProfile({ id: user._id, name, email, password }));
+      setPassword("");
+      setConfirmPassword("");
     }
   };
   return (
@@ -106,6 +116,58 @@ function Profile(props) {
         </Col>
         <Col md={9}>
           <h2>My Orders</h2>
+          {loadingOrders ? (
+            <Loader />
+          ) : errorOrders ? (
+            <Message variant="danger">{errorOrders}</Message>
+          ) : (
+            <Table striped bordered hover responsive className="table-sm">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>DATE</th>
+                  <th>TOTAL</th>
+                  <th>PAID</th>
+                  <th>DELIVERED</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order._id}>
+                    <td>{order._id}</td>
+                    <td>{order.createdAt.substr(0, 10)}</td>
+                    <td>{order.totalPrice}</td>
+                    <td>
+                      {order.isPaid ? (
+                        order.paidAt.substring(0, 10)
+                      ) : (
+                        <i
+                          className="fas fa-times"
+                          style={{ color: "red" }}
+                        ></i>
+                      )}
+                    </td>
+                    <td>
+                      {order.isDelivered ? (
+                        order.paidAt.substring(0, 10)
+                      ) : (
+                        <i
+                          className="fas fa-times"
+                          style={{ color: "red" }}
+                        ></i>
+                      )}
+                    </td>
+                    <td>
+                      <LinkContainer to={`/order/${order._id}`}>
+                        <Button variant="light">Details</Button>
+                      </LinkContainer>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
         </Col>
       </Row>
     </Layout>
