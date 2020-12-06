@@ -11,6 +11,8 @@ const {
   updateUserProfile,
   getUsers,
   deleteUser,
+  getUserById,
+  updateUser,
 } = require("../controllers/user.controller");
 
 // middleware
@@ -22,7 +24,11 @@ router
   .route("/users/profile")
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
-router.route("/users/:id").delete(protect, admin, deleteUser);
+router
+  .route("/users/:id")
+  .delete(protect, admin, deleteUser)
+  .get(protect, admin, getUserById)
+  .put(protect, admin, updateUser);
 
 // export
 module.exports = router;
