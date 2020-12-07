@@ -15,7 +15,7 @@ import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 
 // action
-import { getUserDetails, updateUserProfile } from "../../actions/user.actions";
+import { getUserProfile, updateUserProfile } from "../../actions/user.actions";
 import { listOrder } from "../../actions/order.actions";
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -39,7 +39,7 @@ function Profile(props) {
       props.history.push("/login");
     } else {
       if (!userInfo.name) {
-        dispatch(getUserDetails());
+        dispatch(getUserProfile());
       } else {
         setName(userInfo.name);
         setEmail(userInfo.email);

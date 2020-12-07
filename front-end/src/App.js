@@ -16,6 +16,8 @@ import Payment from "./containers/Payment";
 import PlaceOrder from "./containers/PlaceOrder";
 import Order from "./containers/Order";
 import UserList from "./containers/UserList";
+import UserEdit from "./containers/UserEdit";
+import ProductList from "./containers/ProductList";
 
 function App() {
   return (
@@ -31,9 +33,10 @@ function App() {
         <Route path="/payment" component={Payment} />
         <Route path="/placeorder" component={PlaceOrder} />
         <Route path="/order/:id" component={Order} />
-
+        <Route path="/admin/user/:id/edit" component={UserEdit} />
         {/* admin route */}
         <PrivateRoute path="/admin/userlist" component={UserList} />
+        <PrivateRoute path="/admin/productlist" component={ProductList} />
       </Switch>
     </>
   );

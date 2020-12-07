@@ -41,7 +41,7 @@ export const logout = () => async (dispatch) => {
     type: userConstants.USER_LOGOUT_SUCCESS,
   });
   dispatch({
-    type: userConstants.USER_DETAILS_RESET,
+    type: userConstants.USER_PROFILE_RESET,
   });
   dispatch({
     type: orderConstants.ORDER_LIST_RESET,
@@ -82,21 +82,21 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 };
 
-export const getUserDetails = () => async (dispatch) => {
+export const getUserProfile = () => async (dispatch) => {
   try {
     dispatch({
-      type: userConstants.USER_DETAILS_REQUEST,
+      type: userConstants.USER_PROFILE_REQUEST,
     });
 
     const res = await initialAxios.get(`/users/profile`);
 
     dispatch({
-      type: userConstants.USER_DETAILS_SUCCESS,
+      type: userConstants.USER_PROFILE_SUCCESS,
       payload: res.data,
     });
   } catch (error) {
     dispatch({
-      type: userConstants.USER_DETAILS_FAILURE,
+      type: userConstants.USER_PROFILE_FAILURE,
       payload: {
         error:
           error.response && error.response.data.message
@@ -170,10 +170,6 @@ export const deleteUser = (userId) => async (dispatch) => {
       type: userConstants.USER_DELETE_SUCCESS,
       payload: res.data,
     });
-
-    dispatch({
-      type: userConstants.USER_DELETE_RESET,
-    });
   } catch (error) {
     dispatch({
       type: userConstants.USER_DELETE_FAILURE,
@@ -183,6 +179,54 @@ export const deleteUser = (userId) => async (dispatch) => {
             ? error.response.data.message
             : error.message,
       },
+    });
+  }
+};
+
+export const getUserDetails = (userId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: userConstants.USER_DETAILS_REQUEST,
+    });
+
+    const res = await initialAxios.get(`/users/${userId}`);
+
+    dispatch({
+      type: userConstants.USER_DETAILS_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: userConstants.USER_DETAILS_FAILURE,
+      payload: {
+        error:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      },
+    });
+  }
+};
+
+export const updateUserDetails = (userId, data) => async (dispatch) => {
+  try {
+    dispatch({
+      type: userConstants.USER_DETAILS_UPDATE_REQUEST,
+    });
+
+    const res = await initialAxios.put(`/users/${userId}`, data);
+
+    dispatch({
+      type: userConstants.USER_DETAILS_UPDATE_SUCCESS,
+      payload: res.data,
+    });
+
+    dispatch({
+      type: userConstants.USER_DETAILS_UPDATE_RESET,
+    });
+  } catch (error) {
+    dispatch({
+      type: userConstants.USER_DETAILS_UPDATE_FAILURE,
     });
   }
 };

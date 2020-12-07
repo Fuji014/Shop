@@ -66,25 +66,25 @@ const userReducer = (state = initialState, action) => {
         error: action.payload.error,
       };
     // USER DETAILS REDUCER
-    case userConstants.USER_DETAILS_REQUEST:
+    case userConstants.USER_PROFILE_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case userConstants.USER_DETAILS_SUCCESS:
+    case userConstants.USER_PROFILE_SUCCESS:
       return {
         ...state,
         userInfo: action.payload,
         loading: false,
         error: null,
       };
-    case userConstants.USER_DETAILS_FAILURE:
+    case userConstants.USER_PROFILE_FAILURE:
       return {
         ...initialState,
         loading: false,
         error: action.payload.error,
       };
-    case userConstants.USER_DETAILS_RESET:
+    case userConstants.USER_PROFILE_RESET:
       return {
         ...state,
         userInfo: null,
