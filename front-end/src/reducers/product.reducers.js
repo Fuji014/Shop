@@ -7,8 +7,6 @@ const initialState = {
 };
 
 const productReducer = (state = initialState, action) => {
-  console.log("Product Reducer >>>", action);
-
   switch (action.type) {
     case productConstants.GET_ALL_PRODUCT_REQUEST:
       return {
@@ -23,6 +21,26 @@ const productReducer = (state = initialState, action) => {
         products: action.payload.products,
       };
     case productConstants.GET_ALL_PRODUCT_FAILURE:
+      return {
+        ...initialState,
+        loading: false,
+        error: action.payload.error,
+      };
+    // delete product
+    case productConstants.REMOVE_PRODUCT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case productConstants.REMOVE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        products: state.products.filter(
+          (product) => product._id !== action.payload._id
+        ),
+        loading: false,
+      };
+    case productConstants.REMOVE_PRODUCT_FAILURE:
       return {
         ...initialState,
         loading: false,

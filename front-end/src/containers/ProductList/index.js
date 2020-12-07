@@ -13,7 +13,7 @@ import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 
 // actions
-import { getAllProducts } from "../../actions/product.actions";
+import { getAllProducts, deleteProduct } from "../../actions/product.actions";
 
 function ProductList(props) {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function ProductList(props) {
   // user logged in
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
-  // product list
+  // product store
   const productList = useSelector((state) => state.product);
   const { products, loading, error } = productList;
 
@@ -35,9 +35,9 @@ function ProductList(props) {
 
   const createProductHandler = () => {};
 
-  const deleteHandler = (userId) => {
+  const deleteHandler = (productId) => {
     if (window.confirm("Are you sure you want to delete this?")) {
-      // delete products dispatch
+      dispatch(deleteProduct(productId));
     }
   };
   return (

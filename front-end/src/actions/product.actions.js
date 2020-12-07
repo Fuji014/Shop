@@ -48,3 +48,29 @@ export const getSingleProduct = (id) => async (dispatch) => {
     });
   }
 };
+
+// Private/Admin
+
+export const deleteProduct = (productId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: productConstants.REMOVE_PRODUCT_REQUEST,
+    });
+
+    const res = await initialAxios.delete(`/products/${productId}`);
+    dispatch({
+      type: productConstants.REMOVE_PRODUCT_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: productConstants.REMOVE_PRODUCT_FAILURE,
+      payload: {
+        error:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      },
+    });
+  }
+};

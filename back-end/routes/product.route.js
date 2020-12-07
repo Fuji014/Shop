@@ -1,4 +1,5 @@
 const express = require("express");
+const { get } = require("mongoose");
 
 // config
 const router = express.Router();
@@ -6,12 +7,19 @@ const router = express.Router();
 //controller
 const {
   getProducts,
-  getProduct,
+  getProductById,
+  deleteProduct,
 } = require("../controllers/product.controller.");
+
+// middleware
+const { protect, admin } = require("../middleware/auth.middleware");
 
 // routes
 router.get("/products", getProducts);
-router.get("/products/:id", getProduct);
+router
+  .route("/products/:id")
+  .get(getProductById)
+  .delete(protect, admin, deleteProduct);
 
 // export
 module.exports = router;

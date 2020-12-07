@@ -6,7 +6,6 @@ import userReducer from "./user.reducers";
 import orderReducer from "./order.reducers";
 // user reducers ADMIN
 import userListReducer from "./User/userList.reducer";
-import userDeleteReducer from "./User/userDelete.reducer";
 import userDetailsReducer from "./User/userDetails.reducer";
 // order reducers
 import orderListReducer from "./Order/orderList.reducer";
@@ -22,7 +21,6 @@ const rootReducer = combineReducers({
   // user
   userList: userListReducer,
   userDetails: userDetailsReducer,
-  userDelete: userDeleteReducer,
 });
 
 export default rootReducer;

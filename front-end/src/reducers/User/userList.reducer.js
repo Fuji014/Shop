@@ -33,6 +33,28 @@ const userListReducer = (state = initialState, action) => {
         loading: false,
         error: null,
       };
+    // delete user
+    case userConstants.USER_DELETE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case userConstants.USER_DELETE_SUCCESS:
+      return {
+        ...state,
+        users: state.users.filter((user) => user._id !== action.payload._id),
+        loading: false,
+      };
+    case userConstants.USER_DELETE_FAILURE:
+      return {
+        ...initialState,
+        loading: false,
+        error: action.payload.error,
+      };
+    case userConstants.USER_DELETE_RESET:
+      return {
+        ...initialState,
+      };
     default:
       return state;
   }

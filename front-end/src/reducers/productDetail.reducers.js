@@ -4,6 +4,7 @@ const initialState = {
   product: [],
   loading: false,
   error: null,
+  success: false,
 };
 
 const productDetailReducer = (state = initialState, action) => {
@@ -25,6 +26,7 @@ const productDetailReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload.error,
       };
+
     default:
       return state;
   }
