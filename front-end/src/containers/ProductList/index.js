@@ -12,8 +12,15 @@ import Layout from "../../components/Layout";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 
+// constants
+import { productDetailsConstants } from "../../actions/constants";
+
 // actions
-import { getAllProducts, deleteProduct } from "../../actions/product.actions";
+import {
+  getAllProducts,
+  deleteProduct,
+  createProduct,
+} from "../../actions/product.actions";
 
 function ProductList(props) {
   const dispatch = useDispatch();
@@ -24,16 +31,34 @@ function ProductList(props) {
   // product store
   const productList = useSelector((state) => state.product);
   const { products, loading, error } = productList;
+  // product details store
+  const productDetails = useSelector((state) => state.productDetails);
+  const {
+    success: successCreate,
+    product: createdProduct,
+    loading: loadingCreate,
+    error: errorCreate,
+  } = productDetails;
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(getAllProducts());
-    } else {
+    dispatch({
+      type: productDetailsConstants.CREATE_PRODUCT_RESET,
+    });
+
+    if (!userInfo.isAdmin) {
       props.history.push("/login");
     }
-  }, [dispatch, props.history, userInfo]);
 
-  const createProductHandler = () => {};
+    if (successCreate) {
+      props.history.push(`/admin/product/${createdProduct._id}/edit`);
+    } else {
+      dispatch(getAllProducts());
+    }
+  }, [dispatch, props.history, userInfo, successCreate, createdProduct]);
+
+  const createProductHandler = () => {
+    dispatch(createProduct());
+  };
 
   const deleteHandler = (productId) => {
     if (window.confirm("Are you sure you want to delete this?")) {
@@ -52,6 +77,8 @@ function ProductList(props) {
           </Button>
         </Col>
       </Row>
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (

@@ -26,7 +26,29 @@ const productDetailReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload.error,
       };
-
+    // create product
+    case productDetailsConstants.CREATE_PRODUCT_REQUEST:
+      return {
+        ...state,
+        loading: false,
+      };
+    case productDetailsConstants.CREATE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        product: action.payload,
+        loading: true,
+        success: true,
+      };
+    case productDetailsConstants.CREATE_PRODUCT_FAILURE:
+      return {
+        ...initialState,
+        loading: false,
+        error: action.payload.error,
+      };
+    case productDetailsConstants.CREATE_PRODUCT_RESET:
+      return {
+        ...initialState,
+      };
     default:
       return state;
   }

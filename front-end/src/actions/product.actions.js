@@ -74,3 +74,22 @@ export const deleteProduct = (productId) => async (dispatch) => {
     });
   }
 };
+
+export const createProduct = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: productDetailsConstants.CREATE_PRODUCT_REQUEST,
+    });
+
+    const res = await initialAxios.post("/products", {});
+
+    dispatch({
+      type: productDetailsConstants.CREATE_PRODUCT_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: productDetailsConstants.CREATE_PRODUCT_FAILURE,
+    });
+  }
+};

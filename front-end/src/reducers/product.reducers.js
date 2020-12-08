@@ -46,6 +46,7 @@ const productReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload.error,
       };
+
     default:
       return state;
   }
