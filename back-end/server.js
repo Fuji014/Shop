@@ -3,12 +3,14 @@ const express = require("express");
 const env = require("dotenv");
 const cors = require("cors");
 const connectDb = require("./config/db");
+const morgan = require("morgan");
 
 // middlewares
 const { notFound, errorHandler } = require("./middleware/error.middleware");
 
 // config
 const app = express();
+
 env.config();
 
 // connect db
@@ -23,6 +25,9 @@ const uploadRoutes = require("./routes/upload.route");
 // middleware
 app.use(cors());
 app.use(express.json());
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/api", authRoutes);
 app.use("/api", productRoutes);
