@@ -19,6 +19,7 @@ import UserList from "./containers/UserList";
 import UserEdit from "./containers/UserEdit";
 import ProductList from "./containers/ProductList";
 import ProductEdit from "./containers/ProductEdit";
+import OrderList from "./containers/OrderList";
 
 function App() {
   return (
@@ -39,6 +40,8 @@ function App() {
         <PrivateRoute path="/admin/userlist" component={UserList} />
         <PrivateRoute path="/admin/productlist" component={ProductList} />
         <PrivateRoute path="/admin/product/:id/edit" component={ProductEdit} />
+        <PrivateRoute path="/admin/orderlist" component={OrderList} />
+        <PrivateRoute path="/admin/order/:id" component={Order} />
       </Switch>
     </>
   );

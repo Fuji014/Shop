@@ -10,6 +10,11 @@ const initialState = {
     successPay: false,
     error: null,
   },
+  orderDeliver: {
+    loadingDeliver: false,
+    successDeliver: false,
+    errorDeliver: null,
+  },
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -89,7 +94,39 @@ const orderReducer = (state = initialState, action) => {
           error: null,
         },
       };
-
+    // update order deliver
+    case orderConstants.ORDER_UPDATE_TO_DELIVER_REQUEST:
+      return {
+        ...state,
+        orderDeliver: {
+          loadingDeliver: true,
+        },
+      };
+    case orderConstants.ORDER_UPDATE_TO_DELIVER_SUCCESS:
+      return {
+        ...state,
+        orderDeliver: {
+          loadingDeliver: false,
+          successDeliver: true,
+        },
+      };
+    case orderConstants.ORDER_UPDATE_TO_DELIVER_FAILURE:
+      return {
+        ...state,
+        orderDeliver: {
+          loadingDeliver: false,
+          errorDeliver: action.payload.error,
+        },
+      };
+    case orderConstants.ORDER_UPDATE_TO_DELIVER_RESET:
+      return {
+        ...state,
+        orderDeliver: {
+          loadingDeliver: false,
+          successDeliver: false,
+          errorDeliver: null,
+        },
+      };
     // default
     default:
       return state;

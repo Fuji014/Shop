@@ -49,6 +49,7 @@ const productDetailReducer = (state = initialState, action) => {
       return {
         ...initialState,
       };
+
     default:
       return state;
   }

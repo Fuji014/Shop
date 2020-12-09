@@ -89,3 +89,35 @@ exports.getMyOrders = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 });
+
+// @desc  GET all orders
+// @route GET /api/orders
+// @access  Private/Admin
+exports.getOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({}).populate("user", "id name");
+  if (orders) {
+    res.status(200).json(orders);
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+// @desc  Update order to delivered
+// @route GET /api/orders/:id/deliver
+// @access  Private/Admin
+exports.updateOrderToDelivered = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+
+    const updatedOrder = await order.save();
+
+    res.status(200).json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error("Order not found");
+  }
+});

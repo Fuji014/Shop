@@ -104,3 +104,53 @@ export const listOrder = () => async (dispatch) => {
     });
   }
 };
+
+export const allOrder = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: orderConstants.ORDER_GET_ALL_REQUEST,
+    });
+
+    const res = await initialAxios.get("/orders");
+
+    dispatch({
+      type: orderConstants.ORDER_GET_ALL_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: orderConstants.ORDER_GET_ALL_FAILURE,
+      payload: {
+        error:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      },
+    });
+  }
+};
+
+export const deliverOrder = (orderId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: orderConstants.ORDER_UPDATE_TO_DELIVER_REQUEST,
+    });
+
+    const res = await initialAxios.put(`/orders/${orderId}/deliver`, {});
+
+    dispatch({
+      type: orderConstants.ORDER_UPDATE_TO_DELIVER_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: orderConstants.ORDER_UPDATE_TO_DELIVER_FAILURE,
+      payload: {
+        error:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      },
+    });
+  }
+};

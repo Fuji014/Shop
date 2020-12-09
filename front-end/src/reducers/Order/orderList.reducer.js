@@ -33,7 +33,24 @@ const orderListReducer = (state = initialState, action) => {
         loading: false,
         error: null,
       };
-
+    // Private/Admin
+    // get all orders
+    case orderConstants.ORDER_GET_ALL_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case orderConstants.ORDER_GET_ALL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orders: action.payload,
+      };
+    case orderConstants.ORDER_GET_ALL_FAILURE:
+      return {
+        ...initialState,
+        error: action.payload.error,
+      };
     default:
       return state;
   }
