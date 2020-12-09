@@ -4,6 +4,7 @@ const initialState = {
   products: [],
   loading: false,
   error: null,
+  success: false,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -46,7 +47,30 @@ const productReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload.error,
       };
-
+    // update product
+    case productConstants.UPDATE_PRODUCT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case productConstants.UPDATE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        products: state.products.map((product) =>
+          product._id === action.payload._id ? action.payload : product
+        ),
+        success: true,
+      };
+    case productConstants.UPDATE_PRODUCT_FAILURE:
+      return {
+        ...initialState,
+        error: action.payload.error,
+      };
+    case productConstants.UPDATE_PRODUCT_RESET:
+      return {
+        ...initialState,
+      };
     default:
       return state;
   }

@@ -6,6 +6,9 @@ import { Form, Button } from "react-bootstrap";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 
+// axios
+import initialAxios from "../../helpers/axios";
+
 // router
 import { Link } from "react-router-dom";
 
@@ -16,7 +19,10 @@ import Loader from "../../components/Loader";
 import FormContainer from "../../components/UI/FormContainer";
 
 // action
-import { getSingleProduct } from "../../actions/product.actions";
+import { getSingleProduct, updateProduct } from "../../actions/product.actions";
+
+// constants
+import { productConstants } from "../../actions/constants";
 
 function ProductEdit(props) {
   const productId = props.match.params.id;
@@ -24,6 +30,9 @@ function ProductEdit(props) {
   // Product details store
   const productDetails = useSelector((state) => state.productDetails);
   const { product, loading, error, success } = productDetails;
+  // product store
+  const productUpdate = useSelector((state) => state.product);
+  const { success: successUpdate, error: errorUpdate } = productUpdate;
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -32,23 +41,59 @@ function ProductEdit(props) {
   const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
-    if (!product?.name || product?._id !== productId) {
-      dispatch(getSingleProduct(productId));
+    if (successUpdate) {
+      dispatch({
+        type: productConstants.UPDATE_PRODUCT_RESET,
+      });
+      props.history.push("/admin/productlist");
     } else {
-      setName(product.name);
-      setPrice(product.price);
-      setImage(product.image);
-      setBrand(product.brand);
-      setCategory(product.category);
-      setCountInStock(product.countInStock);
-      setDescription(product.description);
+      if (!product?.name || product?._id !== productId) {
+        dispatch(getSingleProduct(productId));
+      } else {
+        setName(product.name);
+        setPrice(product.price);
+        setImage(product.image);
+        setBrand(product.brand);
+        setCategory(product.category);
+        setCountInStock(product.countInStock);
+        setDescription(product.description);
+      }
     }
-  }, [dispatch, productId, product]);
+  }, [dispatch, productId, product, successUpdate, props.history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(
+      updateProduct({
+        _id: productId,
+        name,
+        price,
+        image,
+        brand,
+        category,
+        description,
+        countInStock,
+      })
+    );
+  };
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    setUploading(true);
+
+    try {
+      const res = await initialAxios.post("/upload", formData);
+      setImage(res.data);
+      setUploading(false);
+    } catch (error) {
+      console.log(error);
+      setUploading(false);
+    }
   };
   return (
     <Layout>
@@ -56,14 +101,16 @@ function ProductEdit(props) {
         Go Back
       </Link>
       <FormContainer>
-        <h1>Edit Pro</h1>
+        <h1>Edit Product</h1>
+        {uploading && <Loader />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {success && <Message variant="success">Update Success</Message>}
         {loading ? (
           <Loader />
         ) : error ? (
           <Message variant="danger">{error}</Message>
         ) : (
-          <Form onSubmit={submitHandler}>
+          <Form onSubmit={submitHandler} enctype="multipart/form-data">
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -92,6 +139,14 @@ function ProductEdit(props) {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
+              <Form.File
+                id="image-file"
+                label="Choose File"
+                custom
+                onChange={uploadFileHandler}
+              >
+                {uploading && <loader />}
+              </Form.File>
             </Form.Group>
 
             <Form.Group controlId="brand">

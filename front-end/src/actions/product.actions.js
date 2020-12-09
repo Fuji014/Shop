@@ -90,6 +90,36 @@ export const createProduct = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: productDetailsConstants.CREATE_PRODUCT_FAILURE,
+      payload: {
+        error:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      },
+    });
+  }
+};
+
+export const updateProduct = (data) => async (dispatch) => {
+  try {
+    dispatch({
+      type: productConstants.UPDATE_PRODUCT_REQUEST,
+    });
+
+    const res = await initialAxios.put(`/products/${data._id}`, data);
+    dispatch({
+      type: productConstants.UPDATE_PRODUCT_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: productConstants.UPDATE_PRODUCT_FAILURE,
+      payload: {
+        error:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      },
     });
   }
 };
