@@ -5,6 +5,11 @@ const initialState = {
   loading: false,
   error: null,
   success: false,
+  createReview: {
+    loadingCreateReview: false,
+    successCreateReview: false,
+    errorCreactReview: null,
+  },
 };
 
 const productDetailReducer = (state = initialState, action) => {
@@ -49,7 +54,39 @@ const productDetailReducer = (state = initialState, action) => {
       return {
         ...initialState,
       };
-
+    // create product review
+    case productDetailsConstants.PRODUCT_CREATE_REVIEW_REQUEST:
+      return {
+        ...state,
+        createReview: {
+          loadingCreateReview: true,
+        },
+      };
+    case productDetailsConstants.PRODUCT_CREATE_REVIEW_SUCCESS:
+      return {
+        ...state,
+        createReview: {
+          loadingCreateReview: false,
+          successCreateReview: true,
+        },
+      };
+    case productDetailsConstants.PRODUCT_CREATE_REVIEW_FAILURE:
+      return {
+        ...state,
+        createReview: {
+          loadingCreateReview: false,
+          errorCreactReview: action.payload.error,
+        },
+      };
+    case productDetailsConstants.PRODUCT_CREATE_REVIEW_RESET:
+      return {
+        ...state,
+        createReview: {
+          loadingCreateReview: false,
+          successCreateReview: false,
+          errorCreactReview: null,
+        },
+      };
     default:
       return state;
   }

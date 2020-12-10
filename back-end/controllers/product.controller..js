@@ -5,10 +5,27 @@ const asyncHandler = require("express-async-handler");
 // @route GET /api/products
 // @access  Public
 exports.getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  const pageSize = 10;
+  const page = Number(req.query.pageNumber) || 1;
+
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
+
+  const count = await Product.countDocuments({ ...keyword });
+  const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
 
   if (products) {
-    res.status(200).json(products);
+    res
+      .status(200)
+      .json({ products, page, pages: Math.ceil(count / pageSize) });
   } else {
     res.status(404).json({ message: "Product not found" });
   }
@@ -132,6 +149,19 @@ exports.createProductReview = asyncHandler(async (req, res) => {
     res.status(201).json({
       message: "Review Added",
     });
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
+
+// @desc  Get top rated products
+// @route GET /api/products/top
+// @access  Public
+exports.getTopProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+  if (products) {
+    res.status(201).json(products);
   } else {
     res.status(404);
     throw new Error("Product not found");

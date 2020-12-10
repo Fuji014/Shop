@@ -9,10 +9,13 @@ import userListReducer from "./User/userList.reducer";
 import userDetailsReducer from "./User/userDetails.reducer";
 // order reducers
 import orderListReducer from "./Order/orderList.reducer";
+// product reducer
+import productTopRatedReducer from "./Product/productTopRated";
 
 const rootReducer = combineReducers({
   product: productReducer,
   productDetails: productDetailsReducer,
+  productTopRated: productTopRatedReducer,
   cart: cartReducer,
   user: userReducer,
   // order

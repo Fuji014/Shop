@@ -13,13 +13,14 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        products: [],
       };
     case productConstants.GET_ALL_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
         products: action.payload.products,
+        pages: action.payload.pages,
+        page: action.payload.page,
       };
     case productConstants.GET_ALL_PRODUCT_FAILURE:
       return {
@@ -71,6 +72,7 @@ const productReducer = (state = initialState, action) => {
       return {
         ...initialState,
       };
+
     default:
       return state;
   }

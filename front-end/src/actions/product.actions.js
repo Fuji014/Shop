@@ -1,15 +1,19 @@
 import initialAxios from "./../helpers/axios";
 import { productConstants, productDetailsConstants } from "./constants";
 
-export const getAllProducts = () => async (dispatch) => {
+export const getAllProducts = (keyword = "", pageNumber = "") => async (
+  dispatch
+) => {
   try {
     dispatch({ type: productConstants.GET_ALL_PRODUCT_REQUEST });
 
-    const res = await initialAxios.get("products");
+    const res = await initialAxios.get(
+      `products?keyword=${keyword}&pageNumber=${pageNumber}`
+    );
 
     dispatch({
       type: productConstants.GET_ALL_PRODUCT_SUCCESS,
-      payload: { products: res.data },
+      payload: res.data,
     });
   } catch (error) {
     dispatch({
@@ -39,6 +43,30 @@ export const getSingleProduct = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: productDetailsConstants.GET_SINGLE_PRODUCT_FAILURE,
+      payload: {
+        error:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      },
+    });
+  }
+};
+
+// get top rated products
+export const getTopProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: productConstants.PRODUCT_TOP_RATED_REQUEST });
+
+    const res = await initialAxios.get("/products/top");
+
+    dispatch({
+      type: productConstants.PRODUCT_TOP_RATED_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: productConstants.PRODUCT_TOP_RATED_FAILURE,
       payload: {
         error:
           error.response && error.response.data.message
@@ -114,6 +142,30 @@ export const updateProduct = (data) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: productConstants.UPDATE_PRODUCT_FAILURE,
+      payload: {
+        error:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      },
+    });
+  }
+};
+
+export const createProductReview = (productId, data) => async (dispatch) => {
+  try {
+    dispatch({
+      type: productDetailsConstants.PRODUCT_CREATE_REVIEW_REQUEST,
+    });
+
+    const res = await initialAxios.post(`/products/${productId}/reviews`, data);
+    dispatch({
+      type: productDetailsConstants.PRODUCT_CREATE_REVIEW_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: productDetailsConstants.PRODUCT_CREATE_REVIEW_FAILURE,
       payload: {
         error:
           error.response && error.response.data.message
