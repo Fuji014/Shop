@@ -28,10 +28,7 @@ const orderListReducer = (state = initialState, action) => {
       };
     case orderConstants.ORDER_LIST_RESET:
       return {
-        ...state,
-        orders: [],
-        loading: false,
-        error: null,
+        ...initialState,
       };
     // Private/Admin
     // get all orders

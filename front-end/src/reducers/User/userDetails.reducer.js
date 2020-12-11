@@ -50,6 +50,10 @@ const userDetailsReducer = (state = initialState, action) => {
         error: action.payload.error,
         loading: false,
       };
+    case userConstants.USER_DETAILS_UPDATE_RESET:
+      return {
+        ...initialState,
+      };
     default:
       return state;
   }

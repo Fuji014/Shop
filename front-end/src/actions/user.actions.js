@@ -1,5 +1,5 @@
 import initialAxios from "../helpers/axios";
-import { userConstants, orderConstants } from "./constants";
+import { userConstants, orderConstants, cartConstants } from "./constants";
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -37,6 +37,7 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   localStorage.removeItem("userInfo");
   localStorage.removeItem("token");
+  localStorage.removeItem("cartItems");
   dispatch({
     type: userConstants.USER_LOGOUT_SUCCESS,
   });
@@ -48,6 +49,9 @@ export const logout = () => async (dispatch) => {
   });
   dispatch({
     type: userConstants.USER_LIST_RESET,
+  });
+  dispatch({
+    type: cartConstants.CART_RESET,
   });
 };
 

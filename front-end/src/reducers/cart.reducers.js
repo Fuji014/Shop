@@ -70,6 +70,11 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         paymentMethod: action.payload,
       };
+    // CART RESET
+    case cartConstants.CART_RESET:
+      return {
+        ...initialState,
+      };
     default:
       return state;
   }

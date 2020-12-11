@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon back-end/server",
+    "start": "node back-end/server",
+    "server": "nodemon back-end/server",
+    "client": "npm start --prefix front-end",
+    "dev": "nodemon back-end/server", 
     "data:import": "node back-end/seeder",
     "data:destroy": "node back-end/seeder -d"
   },

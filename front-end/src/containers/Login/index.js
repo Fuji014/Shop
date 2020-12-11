@@ -40,6 +40,7 @@ function Login(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
     dispatch(login(email, password));
   };
   return (

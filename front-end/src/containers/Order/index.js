@@ -36,7 +36,7 @@ function Order(props) {
   const order = useSelector((state) => state.order);
   const { orderDetails, loading, error, orderPay, orderDeliver } = order;
   const { loadingPay, successPay } = orderPay;
-  const { loadingDeliver, successDeliver } = orderDeliver;
+  const { successDeliver } = orderDeliver;
 
   // user reducer
   const user = useSelector((state) => state.user);
@@ -171,7 +171,9 @@ function Order(props) {
                           <Row>
                             <Col md={1}>
                               <Image
-                                src={orderItem.image}
+                                src={
+                                  process.env.REACT_APP_UPLOAD + orderItem.image
+                                }
                                 alt={orderItem.name}
                                 fluid
                                 rounded

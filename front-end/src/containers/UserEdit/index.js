@@ -15,6 +15,9 @@ import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 import FormContainer from "../../components/UI/FormContainer";
 
+// constants
+import { userConstants } from "../../actions/constants";
+
 // action
 import { getUserDetails, updateUserDetails } from "../../actions/user.actions";
 
@@ -30,6 +33,10 @@ function UserEdit(props) {
   const [isAdmin, setIsAdmin] = useState("");
 
   useEffect(() => {
+    if (success) {
+      dispatch({ type: userConstants.USER_DETAILS_UPDATE_RESET });
+      props.history.push("/admin/userList");
+    }
     if (!user?.name || user?._id !== userId) {
       dispatch(getUserDetails(userId));
     } else {
@@ -37,7 +44,7 @@ function UserEdit(props) {
       setEmail(user.email);
       setIsAdmin(user.isAdmin);
     }
-  }, [dispatch, userId, user]);
+  }, [dispatch, userId, user, success, props.history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -55,7 +62,6 @@ function UserEdit(props) {
       </Link>
       <FormContainer>
         <h1>Edit User</h1>
-        {success && <Message variant="success">Update Success</Message>}
         {loading ? (
           <Loader />
         ) : error ? (

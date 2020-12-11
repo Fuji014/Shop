@@ -33,11 +33,7 @@ function Product(props) {
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product, createReview } = productDetails;
-  const {
-    loadingCreateReview,
-    successCreateReview,
-    errorCreactReview,
-  } = createReview;
+  const { successCreateReview, errorCreactReview } = createReview;
   // user login
   const userLogin = useSelector((state) => state.user);
   const { userInfo } = userLogin;

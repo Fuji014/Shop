@@ -3,9 +3,6 @@ import React, { useState, useEffect } from "react";
 // bootstrap
 import { Form, Button, Row, Col, Table } from "react-bootstrap";
 
-// router
-import { useHistory } from "react-router-dom";
-
 // redux
 import { useDispatch, useSelector } from "react-redux";
 
@@ -44,12 +41,9 @@ function Profile(props) {
         setName(userInfo.name);
         setEmail(userInfo.email);
       }
+      dispatch(listOrder());
     }
   }, [dispatch, userInfo, props.history]);
-
-  useEffect(() => {
-    dispatch(listOrder());
-  }, [dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();

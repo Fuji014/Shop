@@ -38,7 +38,6 @@ function App() {
         <Route path="/payment" component={Payment} />
         <Route path="/placeorder" component={PlaceOrder} />
         <Route path="/order/:id" component={Order} />
-        <Route path="/admin/user/:id/edit" component={UserEdit} />
 
         {/* admin route */}
         <PrivateRoute path="/admin/userlist" component={UserList} />
@@ -51,6 +50,7 @@ function App() {
         <PrivateRoute path="/admin/product/:id/edit" component={ProductEdit} />
         <PrivateRoute path="/admin/orderlist" component={OrderList} />
         <PrivateRoute path="/admin/order/:id" component={Order} />
+        <PrivateRoute path="/admin/user/:id/edit" component={UserEdit} />
       </Switch>
     </>
   );
