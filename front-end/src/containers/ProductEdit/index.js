@@ -87,7 +87,7 @@ function ProductEdit(props) {
     setUploading(true);
 
     try {
-      const res = await initialAxios.post("/upload", formData);
+      const res = await initialAxios.post("/api/upload", formData);
       setImage(res.data);
       setUploading(false);
     } catch (error) {

@@ -8,7 +8,7 @@ export const getAllProducts = (keyword = "", pageNumber = "") => async (
     dispatch({ type: productConstants.GET_ALL_PRODUCT_REQUEST });
 
     const res = await initialAxios.get(
-      `products?keyword=${keyword}&pageNumber=${pageNumber}`
+      `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
     );
 
     dispatch({
@@ -34,7 +34,7 @@ export const getSingleProduct = (id) => async (dispatch) => {
       type: productDetailsConstants.GET_SINGLE_PRODUCT_REQUEST,
     });
 
-    const res = await initialAxios.get(`products/${id}`);
+    const res = await initialAxios.get(`/api/products/${id}`);
 
     dispatch({
       type: productDetailsConstants.GET_SINGLE_PRODUCT_SUCCESS,
@@ -58,7 +58,7 @@ export const getTopProducts = () => async (dispatch) => {
   try {
     dispatch({ type: productConstants.PRODUCT_TOP_RATED_REQUEST });
 
-    const res = await initialAxios.get("/products/top");
+    const res = await initialAxios.get("/api/products/top");
 
     dispatch({
       type: productConstants.PRODUCT_TOP_RATED_SUCCESS,
@@ -85,7 +85,7 @@ export const deleteProduct = (productId) => async (dispatch) => {
       type: productConstants.REMOVE_PRODUCT_REQUEST,
     });
 
-    const res = await initialAxios.delete(`/products/${productId}`);
+    const res = await initialAxios.delete(`/api/products/${productId}`);
     dispatch({
       type: productConstants.REMOVE_PRODUCT_SUCCESS,
       payload: res.data,
@@ -109,7 +109,7 @@ export const createProduct = () => async (dispatch) => {
       type: productDetailsConstants.CREATE_PRODUCT_REQUEST,
     });
 
-    const res = await initialAxios.post("/products", {});
+    const res = await initialAxios.post("/api/products", {});
 
     dispatch({
       type: productDetailsConstants.CREATE_PRODUCT_SUCCESS,
@@ -134,7 +134,7 @@ export const updateProduct = (data) => async (dispatch) => {
       type: productConstants.UPDATE_PRODUCT_REQUEST,
     });
 
-    const res = await initialAxios.put(`/products/${data._id}`, data);
+    const res = await initialAxios.put(`/api/products/${data._id}`, data);
     dispatch({
       type: productConstants.UPDATE_PRODUCT_SUCCESS,
       payload: res.data,
@@ -158,7 +158,10 @@ export const createProductReview = (productId, data) => async (dispatch) => {
       type: productDetailsConstants.PRODUCT_CREATE_REVIEW_REQUEST,
     });
 
-    const res = await initialAxios.post(`/products/${productId}/reviews`, data);
+    const res = await initialAxios.post(
+      `/api/products/${productId}/reviews`,
+      data
+    );
     dispatch({
       type: productDetailsConstants.PRODUCT_CREATE_REVIEW_SUCCESS,
       payload: res.data,

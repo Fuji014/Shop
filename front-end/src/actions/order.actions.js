@@ -7,7 +7,7 @@ export const createOrder = (order) => async (dispatch) => {
       type: orderConstants.ORDER_CREATE_REQUEST,
     });
 
-    const res = await initialAxios.post("/orders", order);
+    const res = await initialAxios.post("/api/orders", order);
 
     console.log("GET ORDER >>>>", res.data);
 
@@ -34,7 +34,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
       type: orderConstants.ORDER_DETAILS_REQUEST,
     });
 
-    const res = await initialAxios.get(`/orders/${id}`);
+    const res = await initialAxios.get(`/api/orders/${id}`);
 
     console.log("GET ORDER DETAILS >>>>", res.data);
 
@@ -61,7 +61,10 @@ export const payOrder = (orderId, paymentResult) => async (dispatch) => {
       type: orderConstants.ORDER_PAY_REQUEST,
     });
 
-    const res = await initialAxios.put(`/orders/${orderId}/pay`, paymentResult);
+    const res = await initialAxios.put(
+      `/api/orders/${orderId}/pay`,
+      paymentResult
+    );
 
     dispatch({
       type: orderConstants.ORDER_PAY_SUCCESS,
@@ -86,7 +89,7 @@ export const listOrder = () => async (dispatch) => {
       type: orderConstants.ORDER_LIST_REQUEST,
     });
 
-    const res = await initialAxios.get("/orders/myorders");
+    const res = await initialAxios.get("/api/orders/myorders");
 
     dispatch({
       type: orderConstants.ORDER_LIST_SUCCESS,
@@ -111,7 +114,7 @@ export const allOrder = () => async (dispatch) => {
       type: orderConstants.ORDER_GET_ALL_REQUEST,
     });
 
-    const res = await initialAxios.get("/orders");
+    const res = await initialAxios.get("/api/orders");
 
     dispatch({
       type: orderConstants.ORDER_GET_ALL_SUCCESS,
@@ -136,7 +139,7 @@ export const deliverOrder = (orderId) => async (dispatch) => {
       type: orderConstants.ORDER_UPDATE_TO_DELIVER_REQUEST,
     });
 
-    const res = await initialAxios.put(`/orders/${orderId}/deliver`, {});
+    const res = await initialAxios.put(`/api/orders/${orderId}/deliver`, {});
 
     dispatch({
       type: orderConstants.ORDER_UPDATE_TO_DELIVER_SUCCESS,

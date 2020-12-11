@@ -94,7 +94,7 @@ function PlaceOrder(props) {
                       <Row>
                         <Col md={1}>
                           <Image
-                            src={process.env.REACT_APP_UPLOAD + cartItem.image}
+                            src={cartItem.image}
                             alt={cartItem.name}
                             fluid
                             rounded

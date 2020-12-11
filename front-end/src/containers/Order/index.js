@@ -66,7 +66,7 @@ function Order(props) {
 
   useEffect(() => {
     const addPaPalScript = async () => {
-      const { data: clientId } = await initialAxios.get("/config/paypal");
+      const { data: clientId } = await initialAxios.get("/api/config/paypal");
       const script = document.createElement("script");
       script.type = "text/javascript";
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
@@ -171,9 +171,7 @@ function Order(props) {
                           <Row>
                             <Col md={1}>
                               <Image
-                                src={
-                                  process.env.REACT_APP_UPLOAD + orderItem.image
-                                }
+                                src={orderItem.image}
                                 alt={orderItem.name}
                                 fluid
                                 rounded

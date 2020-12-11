@@ -7,7 +7,7 @@ export const login = (email, password) => async (dispatch) => {
       type: userConstants.USER_LOGIN_REQUEST,
     });
 
-    const res = await initialAxios.post("/users/login", {
+    const res = await initialAxios.post("/api/users/login", {
       email,
       password,
     });
@@ -61,7 +61,7 @@ export const register = (name, email, password) => async (dispatch) => {
       type: userConstants.USER_REGISTER_REQUEST,
     });
 
-    const res = await initialAxios.post("/users", {
+    const res = await initialAxios.post("/api/users", {
       name,
       email,
       password,
@@ -92,7 +92,7 @@ export const getUserProfile = () => async (dispatch) => {
       type: userConstants.USER_PROFILE_REQUEST,
     });
 
-    const res = await initialAxios.get(`/users/profile`);
+    const res = await initialAxios.get(`/api/users/profile`);
 
     dispatch({
       type: userConstants.USER_PROFILE_SUCCESS,
@@ -117,7 +117,7 @@ export const updateUserProfile = (user) => async (dispatch) => {
       type: userConstants.USER_UPDATE_REQUEST,
     });
 
-    const res = await initialAxios.put("/users/profile", user);
+    const res = await initialAxios.put("/api/users/profile", user);
 
     dispatch({
       type: userConstants.USER_UPDATE_SUCCESS,
@@ -144,7 +144,7 @@ export const listUser = () => async (dispatch) => {
       type: userConstants.USER_LIST_REQUEST,
     });
 
-    const res = await initialAxios.get("/users");
+    const res = await initialAxios.get("/api/users");
 
     dispatch({
       type: userConstants.USER_LIST_SUCCESS,
@@ -169,7 +169,7 @@ export const deleteUser = (userId) => async (dispatch) => {
       type: userConstants.USER_DELETE_REQUEST,
     });
 
-    const res = await initialAxios.delete(`/users/${userId}`);
+    const res = await initialAxios.delete(`/api/users/${userId}`);
     dispatch({
       type: userConstants.USER_DELETE_SUCCESS,
       payload: res.data,
@@ -193,7 +193,7 @@ export const getUserDetails = (userId) => async (dispatch) => {
       type: userConstants.USER_DETAILS_REQUEST,
     });
 
-    const res = await initialAxios.get(`/users/${userId}`);
+    const res = await initialAxios.get(`/api/users/${userId}`);
 
     dispatch({
       type: userConstants.USER_DETAILS_SUCCESS,
@@ -218,7 +218,7 @@ export const updateUserDetails = (userId, data) => async (dispatch) => {
       type: userConstants.USER_DETAILS_UPDATE_REQUEST,
     });
 
-    const res = await initialAxios.put(`/users/${userId}`, data);
+    const res = await initialAxios.put(`/api/users/${userId}`, data);
 
     dispatch({
       type: userConstants.USER_DETAILS_UPDATE_SUCCESS,
